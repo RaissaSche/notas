@@ -1,8 +1,8 @@
 import { Component } from "@angular/core";
-import { NavController } from "ionic-angular/umd";
-import { ListaPage } from "../lista/lista";
-import { ConfigPage } from "../config/config";
-import { NotaPage } from "../nota/nota";
+import { NavController } from "ionic-angular";
+import { NotaPage } from "../../pages/nota/nota";
+import { ListaPage } from "../../pages/lista/lista";
+import { ConfigPage } from "../../pages/config/config";
 
 @Component({
   selector: 'tabs',

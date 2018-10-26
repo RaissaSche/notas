@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular/umd';
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'page-config',
@@ -7,4 +7,7 @@ import { NavController } from 'ionic-angular/umd';
 })
 export class ConfigPage {
   
+  constructor(public navCtrl: NavController) {
+  }
+
 }

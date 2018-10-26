@@ -4,29 +4,30 @@ import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 import { NotaPage } from '../pages/nota/nota';
 import { ListaPage } from '../pages/lista/lista';
-import { ConfiguraEsPage } from '../pages/configura-es/configura-es';
-
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { ConfigPage } from '../pages/config/config';
+import { TabsComponent } from '../components/tabs/tabs.component';
 
 @NgModule({
   declarations: [
     MyApp,
     NotaPage,
     ListaPage,
-    ConfiguraEsPage
+    ConfigPage,
+    TabsComponent
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp)   
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     NotaPage,
     ListaPage,
-    ConfiguraEsPage
+    ConfigPage,
   ],
   providers: [
     StatusBar,
