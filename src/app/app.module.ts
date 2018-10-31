@@ -9,6 +9,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { ConfigPage } from '../pages/config/config';
 import { TabsComponent } from '../components/tabs/tabs.component';
+import { NoteServiceProvider } from '../providers/note-service/note-service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,8 @@ import { TabsComponent } from '../components/tabs/tabs.component';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)   
+    IonicModule.forRoot(MyApp),
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -32,7 +35,8 @@ import { TabsComponent } from '../components/tabs/tabs.component';
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    NoteServiceProvider,
   ]
 })
 export class AppModule {}

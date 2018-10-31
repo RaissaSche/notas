@@ -7,12 +7,20 @@
 </ion-header>
 <ion-content padding id="page1">
 
-  <button id="nota-button4" ion-button color="assertive">
+  <button ion-button color="danger" on-click="deleteNote()">
     <ion-icon name="trash"></ion-icon>
   </button>
-  <button id="nota-button9" ion-button color="positive">
+  <button ion-button color="primary" on-click="createNote()">
     <ion-icon name="add"></ion-icon>
   </button>
+  <button ion-button color="primary" on-click="updateNote()">
+    save
+  </button>
+
+  <h1>{{ note.title }}</h1>
+
+  <p>{{ note.text }}</p>
 
   <tabs></tabs>
+
 </ion-content>
