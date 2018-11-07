@@ -1,6 +1,9 @@
 //import { HttpClient } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { NoteModel } from '../../models/note.model';
+import { OrderEnum } from '../../enums/order.enum';
+import { NoteFieldsEnum } from '../../enums/noteFields.enum';
+import { Ordination } from '../../models/ordination.model';
 
 /*
   Generated class for the NotaServiceProvider provider.
@@ -14,16 +17,15 @@ export class NoteServiceProvider {
   notes = new Array<NoteModel>();
   date = new Date();
   //TODO: parametros de ordenação
-
+  
+  ordination: Ordination;
 
   constructor(/*public http: HttpClient*/) {
     this.criarMock();
+    this.ordination = this.getOrdination();
   }
 
   getNotes(): Array<NoteModel> {
-
-    
-    // /?orderBy=TITLE&order=DECREASING
     return this.notes;
   }
 
@@ -45,6 +47,17 @@ export class NoteServiceProvider {
 
   createNote(note: NoteModel): string {
     return 'abc';
+  }
+
+  updateOrdination(ordination: Ordination): void {
+    this.ordination = ordination;
+  }
+
+  getOrdination(): Ordination {
+    return {
+      order: OrderEnum.DESCENDING,
+      priority: NoteFieldsEnum.DATE
+    }
   }
 
   criarMock() {

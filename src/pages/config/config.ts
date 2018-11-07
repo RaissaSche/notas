@@ -1,32 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { OrderEnum } from '../../enums/order.enum';
+import { NoteFieldsEnum } from '../../enums/noteFields.enum';
+import { Ordination } from '../../models/ordination.model';
+import { NoteServiceProvider } from '../../providers/note-service/note-service';
 
 @Component({
   selector: 'page-config',
   templateUrl: 'config.html'
 })
-export class ConfigPage {
+export class ConfigPage implements OnInit{
 
-  orderBy = Array;
+  ordination = new Ordination();
 
-  constructor(public navCtrl: NavController) {
+  constructor(public navCtrl: NavController,
+    private noteService: NoteServiceProvider) {}
 
-    enum OrderBy {
-      TITLE,
-      DATE
-    }
-    enum Time {
-      ASCENDING = -1,
-      DECREASING = 1
-    }
+  ngOnInit(): void {
+    this.getOrdenation();
   }
 
-  getOrderBy() {
-    return this.orderBy;
+  updateOrdernation() {
+    this.noteService.updateOrdination(this.ordination);
   }
 
-  setOrderBy(tituloOuData, AscOuDesc) {
-    this.orderBy = [tituloOuData, AscOuDesc];
+  getOrdenation() {
+    this.ordination = this.noteService.getOrdination();
   }
 
 }
