@@ -13,14 +13,16 @@ export class NoteServiceProvider {
 
   notes = new Array<NoteModel>();
   date = new Date();
-
   //TODO: parametros de ordenação
+
 
   constructor(/*public http: HttpClient*/) {
     this.criarMock();
   }
 
   getNotes(): Array<NoteModel> {
+
+    
     // /?orderBy=TITLE&order=DECREASING
     return this.notes;
   }
