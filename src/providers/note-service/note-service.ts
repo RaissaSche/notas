@@ -5,6 +5,9 @@ import { OrderEnum } from '../../enums/order.enum';
 import { NoteFieldsEnum } from '../../enums/noteFields.enum';
 import { Ordination } from '../../models/ordination.model';
 
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { Observable } from '../../../node_modules/rxjs';
+
 /*
   Generated class for the NotaServiceProvider provider.
 
@@ -16,11 +19,21 @@ export class NoteServiceProvider {
 
   notes = new Array<NoteModel>();
   date = new Date();
-  //TODO: parametros de ordenação
+  afList = new  Observable<NoteModel[]>();
   
   ordination: Ordination;
 
-  constructor(/*public http: HttpClient*/) {
+  constructor(/*public http: HttpClient*/
+  public afDatabase: AngularFireDatabase) {
+    this.afList = afDatabase.list<NoteModel>('/notes').valueChanges();
+    this.afList.subscribe( d => {
+      for (let index = 0; index < d.length; index++) {
+        const element = d[index];
+        console.log(element);
+        //TODO: Check if this is the right way to do it
+        this.afList[index] = this.notes[index]; 
+      }
+    })
     this.criarMock();
     this.ordination = this.getOrdination();
   }
@@ -46,6 +59,7 @@ export class NoteServiceProvider {
   }
 
   createNote(note: NoteModel): string {
+    note = this.afList.push({});
     return 'abc';
   }
 
