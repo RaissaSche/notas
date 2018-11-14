@@ -1,11 +1,11 @@
 //import { HttpClient } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { NoteModel } from '../../models/note.model';
 import { OrderEnum } from '../../enums/order.enum';
 import { NoteFieldsEnum } from '../../enums/noteFields.enum';
 import { Ordination } from '../../models/ordination.model';
 
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable } from '../../../node_modules/rxjs';
 
 /*
@@ -23,19 +23,18 @@ export class NoteServiceProvider {
   
   ordination: Ordination;
 
-  constructor(/*public http: HttpClient*/
-  public afDatabase: AngularFireDatabase) {
+  constructor(public afDatabase: AngularFireDatabase) {
     this.afList = afDatabase.list<NoteModel>('/notes').valueChanges();
     this.afList.subscribe( d => {
+      this.notes.splice(0, this.notes.length);
       for (let index = 0; index < d.length; index++) {
         const element = d[index];
         console.log(element);
-        //TODO: Check if this is the right way to do it
-        this.afList[index] = this.notes[index]; 
+        this.notes.push(this.afList[index]); 
       }
     })
-    this.criarMock();
-    this.ordination = this.getOrdination();
+
+ this.ordination = this.getOrdination();
   }
 
   getNotes(): Array<NoteModel> {
@@ -43,24 +42,24 @@ export class NoteServiceProvider {
   }
 
   getLastNote(): NoteModel {
-    return this.notes[0];
+    return this.notes[length];
   }
 
   getNote(id: string): NoteModel {
-    return this.notes[1];
+    return this.notes[id];
   }
 
   deleteNote(id: string): void {
-
+    this.afDatabase.list<NoteModel>('/notes').remove(id);
   }
 
-  updateNote(note: NoteModel) {
-
+  updateNote(note: NoteModel, id: string) {
+    this.afDatabase.list<NoteModel>('/notes').update(id, note);
   }
 
-  createNote(note: NoteModel): string {
-    note = this.afList.push({});
-    return 'abc';
+  createNote(note: NoteModel) {
+
+    this.afDatabase.list<NoteModel>('/notes').push(note);
   }
 
   updateOrdination(ordination: Ordination): void {
@@ -73,41 +72,4 @@ export class NoteServiceProvider {
       priority: NoteFieldsEnum.DATE
     }
   }
-
-  criarMock() {
-    this.notes.push({
-      id: '1',
-      title: 'nota1',
-      text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero laboriosam voluptatem ullam tempora minus, perferendis ducimus consequuntur! Quia rem obcaecati tempore laudantium. Quidem id rem cumque facilis omnis possimus ducimus.',
-      date: this.date
-    });
-
-    this.date.setDate(this.date.getDate() + 1)
-
-    this.notes.push({
-      id: '2',
-      title: 'nota2',
-      text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero laboriosam voluptatem ullam tempora minus, perferendis ducimus consequuntur! Quia rem obcaecati tempore laudantium. Quidem id rem cumque facilis omnis possimus ducimus.',
-      date: this.date
-    });
-
-    this.date.setDate(this.date.getDate() + 1)
-
-    this.notes.push({
-      id: '3',
-      title: 'nota da Raissa',
-      text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero laboriosam voluptatem ullam tempora minus, perferendis ducimus consequuntur! Quia rem obcaecati tempore laudantium. Quidem id rem cumque facilis omnis possimus ducimus.',
-      date: this.date
-    });
-
-    this.date.setDate(this.date.getDate() + 1)
-
-    this.notes.push({
-      id: '4',
-      title: 'nota da Julia',
-      text: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Libero laboriosam voluptatem ullam tempora minus, perferendis ducimus consequuntur! Quia rem obcaecati tempore laudantium. Quidem id rem cumque facilis omnis possimus ducimus.',
-      date: new Date()
-    });
-  }
-
 }
