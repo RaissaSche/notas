@@ -16,7 +16,7 @@ export class ListaPage implements OnInit {
   }
 
   ngOnInit() {
-    this.notes = this.noteService.getNotes();
+    this.noteService.getNotes().subscribe(notes => this.notes = notes);
   }
 
   goToNota(noteId){

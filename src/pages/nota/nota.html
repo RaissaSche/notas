@@ -17,9 +17,16 @@
     save
   </button>
 
-  <h1>{{ note.title }}</h1>
+  <pre>{{ note | json }}</pre>
 
-  <p>{{ note.text }}</p>
+  <h1>{{ note?.title }}</h1>
+
+  <p>{{ note?.text }}</p>
+
+  TESTE 
+  <li *ngFor="let todo of (batata$ | async)" [class.done]="todo.done">
+    {{ todo.content }}
+  </li>
 
   <tabs></tabs>
 

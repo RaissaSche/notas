@@ -5,8 +5,10 @@ import { OrderEnum } from '../../enums/order.enum';
 import { NoteFieldsEnum } from '../../enums/noteFields.enum';
 import { Ordination } from '../../models/ordination.model';
 
-import { AngularFireDatabase } from 'angularfire2/database';
-import { Observable } from '../../../node_modules/rxjs';
+import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
+// import { Observable, Subject } from '../../../node_modules/rxjs';
+import { Observable, Subject } from 'rxjs-compat';
+import { Note } from '../../../node_modules/ionic-angular/umd';
 
 /*
   Generated class for the NotaServiceProvider provider.
@@ -17,49 +19,50 @@ import { Observable } from '../../../node_modules/rxjs';
 @Injectable()
 export class NoteServiceProvider {
 
-  notes = new Array<NoteModel>();
-  date = new Date();
-  afList = new  Observable<NoteModel[]>();
+  notes = new Subject<NoteModel[]>();
+  lastNote = new Subject<NoteModel>();
+  note = new Subject<NoteModel>();
+
+  afList = this.afDatabase.list<NoteModel>('notes');
   
   ordination: Ordination;
 
   constructor(public afDatabase: AngularFireDatabase) {
-    this.afList = afDatabase.list<NoteModel>('/notes').valueChanges();
-    this.afList.subscribe( d => {
-      this.notes.splice(0, this.notes.length);
-      for (let index = 0; index < d.length; index++) {
-        const element = d[index];
-        console.log(element);
-        this.notes.push(this.afList[index]); 
-      }
-    })
 
- this.ordination = this.getOrdination();
+    let noteTest;
+    
+    this.ordination = this.getOrdination();
+    
+    this.afList.valueChanges().subscribe(notes => {
+      this.notes.next(notes);
+      this.lastNote.next(notes[notes.length-1]);
+    });
   }
-
-  getNotes(): Array<NoteModel> {
+  
+  getNotes(): Observable<NoteModel[]> {
     return this.notes;
   }
-
-  getLastNote(): NoteModel {
-    return this.notes[length];
+  
+  getLastNote(): Observable<NoteModel> {
+    return this.lastNote;
   }
 
-  getNote(id: string): NoteModel {
-    return this.notes[id];
+  getNote(id: string): Observable<NoteModel> {
+    return this.lastNote;
   }
 
   deleteNote(id: string): void {
-    this.afDatabase.list<NoteModel>('/notes').remove(id);
+    this.afDatabase.list<NoteModel>('notes').remove(id);
   }
 
   updateNote(note: NoteModel, id: string) {
-    this.afDatabase.list<NoteModel>('/notes').update(id, note);
+    this.afDatabase.list<NoteModel>('notes').update(id, note);
   }
 
-  createNote(note: NoteModel) {
-
-    this.afDatabase.list<NoteModel>('/notes').push(note);
+  createNote(note: NoteModel): NoteModel {
+    let algumaCoisa = this.afDatabase.list<NoteModel>('notes').push(note);
+    console.log(algumaCoisa);
+    return this.notes[0];
   }
 
   updateOrdination(ordination: Ordination): void {
@@ -72,4 +75,5 @@ export class NoteServiceProvider {
       priority: NoteFieldsEnum.DATE
     }
   }
+
 }
