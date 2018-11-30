@@ -13,6 +13,7 @@ import { NoteServiceProvider } from '../providers/note-service/note-service';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFireDatabaseModule, AngularFireDatabase } from '@angular/fire/database';
+import { NgModel, FormsModule } from '../../node_modules/@angular/forms';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBNjI5TuLu3RceMDincwoTkN7pAFolvD44",
@@ -36,7 +37,8 @@ export const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     HttpClientModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    FormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

@@ -6,6 +6,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page2">
+
   <div id="container">
     <button id="lista-button7" ion-button color="danger">
       Cancelar
@@ -15,10 +16,13 @@
     </button>
   </div>
   <ion-list id="lista-list1">
-    <ion-item *ngFor="let note of notes" 
+    <ion-item *ngFor="let note of notes | async" 
       color="none" 
       id="lista-list-item1"
       on-click="goToNota(note.id)">
+
+      <pre> {{note | json }} </pre>
+
       <ion-icon name="remove" item-left></ion-icon>
       <strong class="nomeNota">{{note.title}} </strong>
       <p class="dataNota">{{note.date}}</p>

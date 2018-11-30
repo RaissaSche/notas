@@ -11,7 +11,8 @@ import { AngularFireDatabase } from '../../../node_modules/angularfire2/database
 export class NotaPage implements OnInit {
 
   note: NoteModel;
-
+  title: string;
+  text: string;
 
   constructor(
     public navCtrl: NavController,
@@ -19,18 +20,32 @@ export class NotaPage implements OnInit {
     private noteService: NoteServiceProvider) { }
 
   ngOnInit() {
+
     const id = this.navParams.get('noteId');
     console.log(id);
-    if(!!id){
-      this.noteService.getNote(id).subscribe(note => this.note = this.note);
-    }else{
-      this.noteService.getLastNote().subscribe(note => this.note = note);
-    } 
+    
+    if (!!id) {
+      this.noteService.getNote(id).subscribe(note => {
+        this.note = note
+        this.title = note.title;
+        this.text = note.text;
+      });
+    } else {
+      this.noteService.getLastNote().subscribe(note => {
+        this.note = note
+        this.title = note.title;
+        this.text = note.text;
+      });
+    }
     console.log(this.note);
   }
 
+  onSubmit(value) {
+    console.log(value)
+  }
+
   createNote() {
-    this.note = new NoteModel();
+    this.note = { title: this.title, text: this.text };
     this.noteService.createNote(this.note);
   }
 

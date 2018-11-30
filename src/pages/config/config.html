@@ -6,21 +6,23 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding id="page3">
+  
   <form id="configuraEs-form2">
-    <ion-item id="configuraEs-select2">
-      <ion-label>
-        Ordenar por
-      </ion-label>
-      
-      <ion-select name="">
-        <ion-option value="">
-          Data
-        </ion-option>
-        <ion-option value="">
-          Título
-        </ion-option>
-      </ion-select>
-    </ion-item>
+    
+    <div class="item item-block item-md">
+      <div class="item-inner">
+        <div class="input-wrapper">
+          <ion-label>
+            Ordenar por
+          </ion-label>
+        </div>
+        <div class="my-radios">
+          <input type="radio" name="ordenacao" value="date"> Data
+          <input type="radio" name="ordenacao" value="title"> Titulo
+        </div>
+      </div>
+    </div>
+
     <ion-item id="configuraEs-toggle3">
       <ion-label>
         Descendente

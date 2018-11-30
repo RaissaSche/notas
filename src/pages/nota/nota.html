@@ -17,13 +17,12 @@
     save
   </button>
 
-  <pre>{{ note | json }}</pre>
+  <form #form="ngForm" (ngSubmit)="onSubmit(form.value)" class="formulario">
+    <input type="text" placeholder="Titulo" [(ngModel)]="title" name="titulo">
+    <textarea type="text" placeholder="Texto" [(ngModel)]="text" name="texto"></textarea>
+  </form>
 
-  <h1>{{ note?.title }}</h1>
 
-  <p>{{ note?.text }}</p>
-
-  TESTE 
   <li *ngFor="let todo of (batata$ | async)" [class.done]="todo.done">
     {{ todo.content }}
   </li>

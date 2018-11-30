@@ -29,18 +29,19 @@ export class NoteServiceProvider {
 
   constructor(public afDatabase: AngularFireDatabase) {
 
-    let noteTest;
     
     this.ordination = this.getOrdination();
     
     this.afList.valueChanges().subscribe(notes => {
+      console.log('VALUE CHANGES')
       this.notes.next(notes);
       this.lastNote.next(notes[notes.length-1]);
+      console.log('lastnote', this.lastNote)
     });
   }
   
   getNotes(): Observable<NoteModel[]> {
-    return this.notes;
+    return this.afList.valueChanges();
   }
   
   getLastNote(): Observable<NoteModel> {
@@ -60,6 +61,7 @@ export class NoteServiceProvider {
   }
 
   createNote(note: NoteModel): NoteModel {
+    note.id = this.generateId()
     let algumaCoisa = this.afDatabase.list<NoteModel>('notes').push(note);
     console.log(algumaCoisa);
     return this.notes[0];
@@ -75,5 +77,7 @@ export class NoteServiceProvider {
       priority: NoteFieldsEnum.DATE
     }
   }
+
+  generateId = () => `${Date.now()}${Math.floor(Math.random() * Math.floor(1000))}`
 
 }
