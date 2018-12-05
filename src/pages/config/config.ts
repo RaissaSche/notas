@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { OrderEnum } from '../../enums/order.enum';
-import { NoteFieldsEnum } from '../../enums/noteFields.enum';
 import { Ordination } from '../../models/ordination.model';
 import { NoteServiceProvider } from '../../providers/note-service/note-service';
 

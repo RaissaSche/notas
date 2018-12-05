@@ -1,4 +1,4 @@
 export enum NoteFieldsEnum {
-    TITLE = 'TITLE',
-    DATE = 'DATE'
+    TITLE = 'title',
+    DATE = 'date'
 }

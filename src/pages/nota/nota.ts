@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { NoteServiceProvider } from '../../providers/note-service/note-service';
 import { NoteModel } from '../../models/note.model';
-import { AngularFireDatabase } from '../../../node_modules/angularfire2/database';
 
 @Component({
   selector: 'page-nota',
@@ -10,10 +9,9 @@ import { AngularFireDatabase } from '../../../node_modules/angularfire2/database
 })
 export class NotaPage implements OnInit {
 
-  note: NoteModel;
-  title: string;
-  text: string;
-
+  note = new NoteModel('', '');
+  key: string;
+ 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -21,23 +19,21 @@ export class NotaPage implements OnInit {
 
   ngOnInit() {
 
-    const id = this.navParams.get('noteId');
-    console.log(id);
+    this.key = this.navParams.get('noteId');
+
+    let noteSubscription;
     
-    if (!!id) {
-      this.noteService.getNote(id).subscribe(note => {
-        this.note = note
-        this.title = note.title;
-        this.text = note.text;
+    if (!!this.key) {
+      noteSubscription = this.noteService.getNote(this.key).subscribe(note => {
+        if(note) this.note = note 
+        noteSubscription.unsubscribe();
       });
     } else {
-      this.noteService.getLastNote().subscribe(note => {
-        this.note = note
-        this.title = note.title;
-        this.text = note.text;
+      noteSubscription = this.noteService.getLastNote().subscribe(note => {
+        if (note) this.note = note
+        noteSubscription.unsubscribe();
       });
     }
-    console.log(this.note);
   }
 
   onSubmit(value) {
@@ -45,19 +41,19 @@ export class NotaPage implements OnInit {
   }
 
   createNote() {
-    this.note = { title: this.title, text: this.text };
-    this.noteService.createNote(this.note);
+    this.note = this.noteService.createNote(this.note);
+    this.key = this.note.key;
   }
 
   updateNote() {
-    this.noteService.updateNote(this.note, this.note.id);
+    this.noteService.updateNote(this.note, this.note.key);
   }
 
   deleteNote() {
-    this.noteService.deleteNote(this.note.id);
+    this.noteService.deleteNote(this.note.key);
   }
 
   getNote() {
-    this.noteService.getNote(this.note.id);
+    this.noteService.getNote(this.note.key);
   }
 }

@@ -3,7 +3,7 @@ import { NavController } from 'ionic-angular';
 import { NoteServiceProvider } from '../../providers/note-service/note-service';
 import { NoteModel } from '../../models/note.model';
 import { NotaPage } from '../nota/nota';
-import { Observable } from '../../../node_modules/rxjs';
+import { Observable, Subject } from '../../../node_modules/rxjs';
 
 @Component({
   selector: 'page-lista',
@@ -11,17 +11,13 @@ import { Observable } from '../../../node_modules/rxjs';
 })
 export class ListaPage implements OnInit {
 
-  notes: Observable<any[]>;
+  notes: Observable<NoteModel[]>
 
-
-  constructor(public navCtrl: NavController, private noteService: NoteServiceProvider) {
-  }
+  constructor(
+    private navCtrl: NavController, 
+    public noteService: NoteServiceProvider) { }
 
   ngOnInit() {
-    // this.noteService.getNotes().(notes => {
-    //   this.notes = notes
-    //   console.log('notes', notes)
-    // });
     this.notes = this.noteService.getNotes();
   }
 

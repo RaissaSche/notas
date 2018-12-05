@@ -18,17 +18,16 @@
   <ion-list id="lista-list1">
     <ion-item *ngFor="let note of notes | async" 
       color="none" 
-      id="lista-list-item1"
-      on-click="goToNota(note.id)">
+      id="lista-list-item1">
 
       <pre> {{note | json }} </pre>
 
-      <ion-icon name="remove" item-left></ion-icon>
+      <button type="button" (click)="noteService.deleteNote(note.key)">delete</button>
+      <button type="button" (click)="goToNota(note.key)">edit</button>
       <strong class="nomeNota">{{note.title}} </strong>
       <p class="dataNota">{{note.date}}</p>
     </ion-item>
   </ion-list>
 
-  <tabs></tabs>
-
 </ion-content>
+<tabs></tabs>

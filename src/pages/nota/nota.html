@@ -18,8 +18,8 @@
   </button>
 
   <form #form="ngForm" (ngSubmit)="onSubmit(form.value)" class="formulario">
-    <input type="text" placeholder="Titulo" [(ngModel)]="title" name="titulo">
-    <textarea type="text" placeholder="Texto" [(ngModel)]="text" name="texto"></textarea>
+    <input type="text" placeholder="Titulo" [(ngModel)]="note.title" name="titulo">
+    <textarea type="text" placeholder="Texto" [(ngModel)]="note.text" name="texto"></textarea>
   </form>
 
 
@@ -27,6 +27,5 @@
     {{ todo.content }}
   </li>
 
-  <tabs></tabs>
-
 </ion-content>
+<tabs></tabs> 

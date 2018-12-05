@@ -1,8 +1,9 @@
 tabs {
   display: flex;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
+  z-index: 1;
 
   button {
     width: 100%;
