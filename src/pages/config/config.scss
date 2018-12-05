@@ -1,10 +1,17 @@
-.my-radios {
-    width: 50%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    input {
-        width: initial;
-        margin: 0 10px;
+page-config {   
+    .my-radios {
+        width: 50%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        input {
+            width: initial;
+            margin: 0 10px;
+        }
+    }
+    
+    .form-button {
+        margin-top: 10px;
+        width: 80%;
     }
 }

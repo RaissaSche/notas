@@ -7,20 +7,10 @@
 </ion-header>
 <ion-content padding id="page2">
 
-  <div id="container">
-    <button id="lista-button7" ion-button color="danger">
-      Cancelar
-    </button>
-    <button id="lista-button8" ion-button color="primary">
-      Salvar
-    </button>
-  </div>
   <ion-list id="lista-list1">
     <ion-item *ngFor="let note of notes | async" 
       color="none" 
       id="lista-list-item1">
-
-      <pre> {{note | json }} </pre>
 
       <button type="button" (click)="noteService.deleteNote(note.key)">delete</button>
       <button type="button" (click)="goToNota(note.key)">edit</button>

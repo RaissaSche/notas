@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Ordination } from '../../models/ordination.model';
 import { NoteServiceProvider } from '../../providers/note-service/note-service';
+import { NoteFieldsEnum } from '../../enums/noteFields.enum';
 
 @Component({
   selector: 'page-config',
@@ -10,6 +11,7 @@ import { NoteServiceProvider } from '../../providers/note-service/note-service';
 export class ConfigPage implements OnInit{
 
   ordination = new Ordination();
+  noteFieldsEnum = NoteFieldsEnum;
 
   constructor(public navCtrl: NavController,
     private noteService: NoteServiceProvider) {}
@@ -18,7 +20,7 @@ export class ConfigPage implements OnInit{
     this.getOrdenation();
   }
 
-  updateOrdernation() {
+  updateOrdination(value) {
     this.noteService.updateOrdination(this.ordination);
   }
 

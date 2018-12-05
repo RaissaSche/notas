@@ -8,6 +8,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 // import { Observable, Subject } from '../../../node_modules/rxjs';
 import { Observable, Subject, Subscriber } from 'rxjs-compat';
 import { Subscribable } from 'rxjs';
+import { storage } from 'firebase';
 
 /*
   Generated class for the NotaServiceProvider provider.
@@ -32,13 +33,15 @@ export class NoteServiceProvider {
     // delete all
     // this.afDatabase.list<NoteModel>(this.tableName).remove();
 
-    this.ordination = this.getOrdination();
-    console.log('ordination', this.ordination);
+    this.initializing();
+  }
 
-    this.itemsRef = afDatabase.list<NoteModel>(this.tableName, ref => 
+  initializing() {
+    this.ordination = this.getOrdination();
+
+    this.itemsRef = this.afDatabase.list<NoteModel>(this.tableName, ref => 
       ref.orderByChild(this.ordination.priority));
 
-    // Use snapshotChanges().map() to store the key
     this.notes = this.itemsRef.snapshotChanges()
       .pipe( changes => 
         changes.map(c1 => 
@@ -85,13 +88,18 @@ export class NoteServiceProvider {
 
   updateOrdination(ordination: Ordination): void {
     this.ordination = ordination;
+    localStorage.setItem( 'ordination', JSON.stringify(ordination) );
+    this.initializing();
   }
 
   getOrdination(): Ordination {
-    return {
-      ascending: false,
-      priority: NoteFieldsEnum.DATE
-    }
+    let ordination = JSON.parse( localStorage.getItem('ordination') );
+    if (!ordination)
+      ordination = {
+        ascending: false,
+        priority: NoteFieldsEnum.DATE
+      }
+    return ordination;
   }
 
 }

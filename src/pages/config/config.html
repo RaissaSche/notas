@@ -7,7 +7,7 @@
 </ion-header>
 <ion-content padding id="page3">
   
-  <form id="configuraEs-form2">
+  <form #form="ngForm" class="formulario">
     
     <div class="item item-block item-md">
       <div class="item-inner">
@@ -16,19 +16,28 @@
             Ordenar por
           </ion-label>
         </div>
-        <div class="my-radios">
-          <input type="radio" name="ordenacao" value="date"> Data
-          <input type="radio" name="ordenacao" value="title"> Titulo
+        <div class="my-radios" (click)=updateOrdination(form.value)>
+          <input type="radio" name="campo" [value]="noteFieldsEnum.DATE" [(ngModel)]="ordination.priority"> Data
+          <input type="radio" name="campo" [value]="noteFieldsEnum.TITLE" [(ngModel)]="ordination.priority"> Titulo
         </div>
       </div>
     </div>
 
-    <ion-item id="configuraEs-toggle3">
-      <ion-label>
-        Descendente
-      </ion-label>
-      <ion-toggle color="energized" checked="false"></ion-toggle>
-    </ion-item>
+    <div class="item item-block item-md">
+        <div class="item-inner">
+          <div class="input-wrapper">
+            <ion-label>
+              De forma
+            </ion-label>
+          </div>
+          <div class="my-radios">
+            <input type="radio" name="ordem" [value]="true" [(ngModel)]="ordination.ascending"> Ascending
+            <input type="radio" name="ordem" [value]="false" [(ngModel)]="ordination.ascending"> Descending
+          </div>
+        </div>
+      </div>
+
+      <button class="form-button" (click)=updateOrdination()>save</button>
   </form>
 </ion-content>
 <tabs></tabs>
